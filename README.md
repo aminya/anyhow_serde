@@ -1,19 +1,19 @@
-Anyhow&ensp;¯\\\_(°ペ)\_/¯
+Anyhow Serde&ensp;¯\\\_(°ペ)\_/¯
 ==========================
 
-[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
+[<img alt="github" src="https://img.shields.io/badge/github-aminya/anyhow_serde-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/aminya/anyhow_serde)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
-[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
-[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow_serde)
+[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/aminya/anyhow_serde/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/aminya/anyhow_serde/actions?query=branch%3Amaster)
 
-This library provides [`anyhow::Error`][Error], a trait object based error type
-for easy idiomatic error handling in Rust applications.
+This library provides [`anyhow_serde::Error`][Error], a trait object based error type
+for easy idiomatic error handling in Rust applications. This is a drop-in replacement for [`anyhow`](https://crates.io/crates/anyhow) with serde support.
 
-[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
+[Error]: https://docs.rs/anyhow_serde/1.0/anyhow/struct.Error.html
 
 ```toml
 [dependencies]
-anyhow = "1.0"
+anyhow_serde = "1.0"
 ```
 
 *Compiler support: requires rustc 1.39+*
@@ -22,14 +22,14 @@ anyhow = "1.0"
 
 ## Details
 
-- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
+- Use `Result<T, anyhow_serde::Error>`, or equivalently `anyhow_serde::Result<T>`, as the
   return type of any fallible function.
 
   Within the function, use `?` to easily propagate any error that implements the
   [`std::error::Error`] trait.
 
   ```rust
-  use anyhow::Result;
+  use anyhow_serde::Result;
 
   fn get_cluster_info() -> Result<ClusterMap> {
       let config = std::fs::read_to_string("cluster.json")?;
@@ -46,7 +46,7 @@ anyhow = "1.0"
   application was in the middle of.
 
   ```rust
-  use anyhow::{Context, Result};
+  use anyhow_serde::{Context, Result};
 
   fn main() -> Result<()> {
       ...
@@ -111,7 +111,7 @@ anyhow = "1.0"
   ```
 
 - One-off error messages can be constructed using the `anyhow!` macro, which
-  supports string interpolation and produces an `anyhow::Error`.
+  supports string interpolation and produces an `anyhow_serde::Error`.
 
   ```rust
   return Err(anyhow!("Missing attribute: {}", missing));
@@ -133,7 +133,7 @@ Cargo.toml. A global allocator is required.
 
 ```toml
 [dependencies]
-anyhow = { version = "1.0", default-features = false }
+anyhow_serde = { version = "1.0", default-features = false }
 ```
 
 With versions of Rust older than 1.81, no_std mode may require an additional
@@ -145,7 +145,7 @@ conversions are defined by is only available in std in those old versions.
 
 ## Comparison to failure
 
-The `anyhow::Error` type works something like `failure::Error`, but unlike
+The `anyhow_serde::Error` type works something like `failure::Error`, but unlike
 failure ours is built around the standard library's `std::error::Error` trait
 rather than a separate trait `failure::Fail`. The standard library has adopted
 the necessary improvements for this to be possible as part of [RFC 2504].

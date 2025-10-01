@@ -9,7 +9,7 @@ publish = false
 path = "test.rs"
 
 [dependencies]
-anyhow = { path = "../..", default-features = false }
+anyhow_serde = { path = "../..", default-features = false }
 
 [features]
 default = ["std"]

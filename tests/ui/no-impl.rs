@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+use anyhow_serde::anyhow;
 
 #[derive(Debug)]
 struct Error;

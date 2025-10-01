@@ -4,14 +4,14 @@
 /// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
 ///
 /// The surrounding function's or closure's return value is required to be
-/// <code>Result&lt;_, [anyhow::Error][crate::Error]&gt;</code>.
+/// <code>Result&lt;_, [anyhow_serde::Error][crate::Error]&gt;</code>.
 ///
 /// [anyhow!]: crate::anyhow
 ///
 /// # Example
 ///
 /// ```
-/// # use anyhow::{bail, Result};
+/// # use anyhow_serde::{bail, Result};
 /// #
 /// # fn has_permission(user: usize, resource: usize) -> bool {
 /// #     true
@@ -29,7 +29,7 @@
 /// ```
 ///
 /// ```
-/// # use anyhow::{bail, Result};
+/// # use anyhow_serde::{bail, Result};
 /// # use thiserror::Error;
 /// #
 /// # const MAX_DEPTH: usize = 1;
@@ -75,7 +75,7 @@ macro_rules! __ensure {
         /// <code>if !$cond { return Err([anyhow!($args\...)][anyhow!]); }</code>.
         ///
         /// The surrounding function's or closure's return value is required to be
-        /// <code>Result&lt;_, [anyhow::Error][crate::Error]&gt;</code>.
+        /// <code>Result&lt;_, [anyhow_serde::Error][crate::Error]&gt;</code>.
         ///
         /// Analogously to `assert!`, `ensure!` takes a condition and exits the function
         /// if the condition fails. Unlike `assert!`, `ensure!` returns an `Error`
@@ -86,7 +86,7 @@ macro_rules! __ensure {
         /// # Example
         ///
         /// ```
-        /// # use anyhow::{ensure, Result};
+        /// # use anyhow_serde::{ensure, Result};
         /// #
         /// # fn main() -> Result<()> {
         /// #     let user = 0;
@@ -97,7 +97,7 @@ macro_rules! __ensure {
         /// ```
         ///
         /// ```
-        /// # use anyhow::{ensure, Result};
+        /// # use anyhow_serde::{ensure, Result};
         /// # use thiserror::Error;
         /// #
         /// # const MAX_DEPTH: usize = 1;
@@ -181,14 +181,14 @@ __ensure![
 /// If called with a single argument whose type implements `std::error::Error`
 /// (in addition to `Debug` and `Display`, which are always required), then that
 /// Error impl's `source` is preserved as the `source` of the resulting
-/// `anyhow::Error`.
+/// `anyhow_serde::Error`.
 ///
 /// # Example
 ///
 /// ```
 /// # type V = ();
 /// #
-/// use anyhow::{anyhow, Result};
+/// use anyhow_serde::{anyhow, Result};
 ///
 /// fn lookup(key: &str) -> Result<V> {
 ///     if key.len() != 16 {

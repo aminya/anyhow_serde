@@ -3,7 +3,7 @@
 mod drop;
 
 use self::drop::{DetectDrop, Flag};
-use anyhow::{Error, Result};
+use anyhow_serde::{Error, Result};
 use std::error::Error as StdError;
 
 #[test]

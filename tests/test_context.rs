@@ -6,11 +6,11 @@
 mod drop;
 
 use crate::drop::{DetectDrop, Flag};
-use anyhow::{Context, Error, Result};
+use anyhow_serde::{Context, Error, Result};
 use std::fmt::{self, Display};
 use thiserror::Error;
 
-// https://github.com/dtolnay/anyhow/issues/18
+// https://github.com/aminya/anyhow_serde/issues/18
 #[test]
 fn test_inference() -> Result<()> {
     let x = "1";

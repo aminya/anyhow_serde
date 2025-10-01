@@ -1,4 +1,4 @@
-use anyhow::{ensure, Result};
+use anyhow_serde::{ensure, Result};
 
 fn main() -> Result<()> {
     ensure!();

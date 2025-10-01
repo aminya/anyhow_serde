@@ -27,7 +27,7 @@
 )]
 
 use self::Enum::Generic;
-use anyhow::{anyhow, ensure, Chain, Error, Result};
+use anyhow_serde::{anyhow, ensure, Chain, Error, Result};
 use std::fmt::{self, Debug};
 use std::iter;
 use std::marker::{PhantomData, PhantomData as P};
@@ -339,10 +339,10 @@ fn test_path() {
     let test = || Ok(ensure!(crate::S.t(1) == 2));
     assert_err(test, "Condition failed: `crate::S.t(1) == 2` (1 vs 2)");
 
-    let test = || Ok(ensure!(::anyhow::Error::root_cause.t(1) == 2));
+    let test = || Ok(ensure!(::anyhow_serde::Error::root_cause.t(1) == 2));
     assert_err(
         test,
-        "Condition failed: `::anyhow::Error::root_cause.t(1) == 2` (1 vs 2)",
+        "Condition failed: `::anyhow_serde::Error::root_cause.t(1) == 2` (1 vs 2)",
     );
 
     let test = || Ok(ensure!(Error::msg::<&str>.t(1) == 2));

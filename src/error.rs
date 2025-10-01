@@ -62,7 +62,7 @@ impl Error {
     /// #
     /// # use ffi::{Input, Output};
     /// #
-    /// use anyhow::{Error, Result};
+    /// use anyhow_serde::{Error, Result};
     /// use futures::stream::{Stream, StreamExt, TryStreamExt};
     ///
     /// async fn demo<S>(stream: S) -> Result<Vec<Output>>
@@ -93,7 +93,7 @@ impl Error {
     ///
     /// Here is a skeleton of a library that provides its own error abstraction.
     /// The pair of `From` impls provide bidirectional support for `?`
-    /// conversion between `Report` and `anyhow::Error`.
+    /// conversion between `Report` and `anyhow_serde::Error`.
     ///
     /// ```
     /// use std::error::Error as StdError;
@@ -102,20 +102,20 @@ impl Error {
     ///
     /// impl<E> From<E> for Report
     /// where
-    ///     E: Into<anyhow::Error>,
-    ///     Result<(), E>: anyhow::Context<(), E>,
+    ///     E: Into<anyhow_serde::Error>,
+    ///     Result<(), E>: anyhow_serde::Context<(), E>,
     /// {
     ///     fn from(error: E) -> Self {
-    ///         let anyhow_error: anyhow::Error = error.into();
+    ///         let anyhow_error: anyhow_serde::Error = error.into();
     ///         let boxed_error: Box<dyn StdError + Send + Sync + 'static> = anyhow_error.into();
     ///         Report::from_boxed(boxed_error)
     ///     }
     /// }
     ///
-    /// impl From<Report> for anyhow::Error {
+    /// impl From<Report> for anyhow_serde::Error {
     ///     fn from(report: Report) -> Self {
     ///         let boxed_error: Box<dyn StdError + Send + Sync + 'static> = report.into_boxed();
-    ///         anyhow::Error::from_boxed(boxed_error)
+    ///         anyhow_serde::Error::from_boxed(boxed_error)
     ///     }
     /// }
     ///
@@ -129,7 +129,7 @@ impl Error {
     /// }
     ///
     /// // Example usage: can use `?` in both directions.
-    /// fn a() -> anyhow::Result<()> {
+    /// fn a() -> anyhow_serde::Result<()> {
     ///     b()?;
     ///     Ok(())
     /// }
@@ -366,7 +366,7 @@ impl Error {
     /// #     }
     /// # }
     /// #
-    /// use anyhow::Result;
+    /// use anyhow_serde::Result;
     /// use std::fs::File;
     /// use std::path::Path;
     ///
@@ -389,7 +389,7 @@ impl Error {
     ///             "only the first {} lines of {} are valid",
     ///             error.line, path.as_ref().display(),
     ///         );
-    ///         anyhow::Error::new(error).context(context)
+    ///         anyhow_serde::Error::new(error).context(context)
     ///     })
     /// }
     /// ```
@@ -424,7 +424,7 @@ impl Error {
             object_backtrace: context_backtrace::<C>,
         };
 
-        // As the cause is anyhow::Error, we already have a backtrace for it.
+        // As the cause is anyhow_serde::Error, we already have a backtrace for it.
         let backtrace = None;
 
         // Safety: passing vtable that operates on the right type.
@@ -456,7 +456,7 @@ impl Error {
     ///
     /// ```toml
     /// [dependencies]
-    /// anyhow = { version = "1.0", features = ["backtrace"] }
+    /// anyhow_serde = { version = "1.0", features = ["backtrace"] }
     /// ```
     #[cfg(any(std_backtrace, feature = "backtrace"))]
     pub fn backtrace(&self) -> &impl_backtrace!() {
@@ -472,7 +472,7 @@ impl Error {
     /// # Example
     ///
     /// ```
-    /// use anyhow::Error;
+    /// use anyhow_serde::Error;
     /// use std::io;
     ///
     /// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
@@ -556,7 +556,7 @@ impl Error {
     /// # Example
     ///
     /// ```
-    /// # use anyhow::anyhow;
+    /// # use anyhow_serde::anyhow;
     /// # use std::fmt::{self, Display};
     /// # use std::task::Poll;
     /// #
@@ -624,14 +624,14 @@ impl Error {
     /// Convert to a standard library error trait object.
     ///
     /// This is implemented as a cheap pointer cast that does not allocate or
-    /// deallocate memory. Like [`anyhow::Error::from_boxed`], it's useful for
+    /// deallocate memory. Like [`anyhow_serde::Error::from_boxed`], it's useful for
     /// interop with other error libraries.
     ///
     /// The same conversion is also available as
-    /// <code style="display:inline;white-space:normal;">impl From&lt;anyhow::Error&gt;
+    /// <code style="display:inline;white-space:normal;">impl From&lt;anyhow_serde::Error&gt;
     /// for Box&lt;dyn Error + Send + Sync + &apos;static&gt;</code>.
     ///
-    /// If a backtrace was collected during construction of the `anyhow::Error`,
+    /// If a backtrace was collected during construction of the `anyhow_serde::Error`,
     /// that backtrace remains accessible using the standard library `Error`
     /// trait's provider API, but as a consequence, the resulting boxed error
     /// can no longer be downcast to its original underlying type.
@@ -640,7 +640,7 @@ impl Error {
     #[cfg_attr(not(error_generic_member_access), doc = "# _ = stringify! {")]
     /// #![feature(error_generic_member_access)]
     ///
-    /// use anyhow::anyhow;
+    /// use anyhow_serde::anyhow;
     /// use std::backtrace::Backtrace;
     /// use thiserror::Error;
     ///
@@ -658,7 +658,7 @@ impl Error {
     #[cfg_attr(not(error_generic_member_access), doc = "# };")]
     /// ```
     ///
-    /// [`anyhow::Error::from_boxed`]: Self::from_boxed
+    /// [`anyhow_serde::Error::from_boxed`]: Self::from_boxed
     #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     #[must_use]
     pub fn into_boxed_dyn_error(self) -> Box<dyn StdError + Send + Sync + 'static> {
@@ -675,14 +675,14 @@ impl Error {
     /// Unlike `self.into_boxed_dyn_error()`, this method relocates the
     /// underlying error into a new allocation in order to make it downcastable
     /// to `&E` or `Box<E>` for its original underlying error type. Any
-    /// backtrace collected during construction of the `anyhow::Error` is
+    /// backtrace collected during construction of the `anyhow_serde::Error` is
     /// discarded.
     ///
     /// ```
     #[cfg_attr(not(error_generic_member_access), doc = "# _ = stringify!{")]
     /// #![feature(error_generic_member_access)]
     ///
-    /// use anyhow::anyhow;
+    /// use anyhow_serde::anyhow;
     /// use std::backtrace::Backtrace;
     /// use thiserror::Error;
     ///
@@ -718,11 +718,11 @@ impl Error {
         unsafe { ErrorImpl::provide(self.inner.by_ref(), request) }
     }
 
-    // Called by thiserror when you have `#[source] anyhow::Error`. This provide
-    // implementation includes the anyhow::Error's Backtrace if any, unlike
+    // Called by thiserror when you have `#[source] anyhow_serde::Error`. This provide
+    // implementation includes the anyhow_serde::Error's Backtrace if any, unlike
     // deref'ing to dyn Error where the provide implementation would include
     // only the original error's Backtrace from before it got wrapped into an
-    // anyhow::Error.
+    // anyhow_serde::Error.
     #[cfg(error_generic_member_access)]
     #[doc(hidden)]
     pub fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {

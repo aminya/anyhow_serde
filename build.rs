@@ -162,7 +162,7 @@ fn compile_probe(rustc_bootstrap: bool) -> bool {
     cmd.stderr(Stdio::null())
         .arg("--cfg=anyhow_build_probe")
         .arg("--edition=2018")
-        .arg("--crate-name=anyhow")
+        .arg("--crate-name=anyhow_serde")
         .arg("--crate-type=lib")
         .arg("--cap-lints=allow")
         .arg("--emit=dep-info,metadata")

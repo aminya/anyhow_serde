@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+use anyhow_serde::anyhow;
 use std::error::Error as StdError;
 use std::fmt::{self, Display};
 use std::io;

@@ -1,6 +1,6 @@
 #![allow(clippy::extra_unused_type_parameters)]
 
-use anyhow::Error;
+use anyhow_serde::Error;
 use std::panic::{RefUnwindSafe, UnwindSafe};
 
 #[test]

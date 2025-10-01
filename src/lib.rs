@@ -1,4 +1,4 @@
-//! [![github]](https://github.com/dtolnay/anyhow)&ensp;[![crates-io]](https://crates.io/crates/anyhow)&ensp;[![docs-rs]](https://docs.rs/anyhow)
+//! [![github]](https://github.com/aminya/anyhow_serde)&ensp;[![crates-io]](https://crates.io/crates/anyhow)&ensp;[![docs-rs]](https://docs.rs/anyhow_serde)
 //!
 //! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
 //! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
@@ -6,14 +6,14 @@
 //!
 //! <br>
 //!
-//! This library provides [`anyhow::Error`][Error], a trait object based error
+//! This library provides [`anyhow_serde::Error`][Error], a trait object based error
 //! type for easy idiomatic error handling in Rust applications.
 //!
 //! <br>
 //!
 //! # Details
 //!
-//! - Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as
+//! - Use `Result<T, anyhow_serde::Error>`, or equivalently `anyhow_serde::Result<T>`, as
 //!   the return type of any fallible function.
 //!
 //!   Within the function, use `?` to easily propagate any error that implements
@@ -35,7 +35,7 @@
 //!   #
 //!   # impl Deserialize for ClusterMap {}
 //!   #
-//!   use anyhow::Result;
+//!   use anyhow_serde::Result;
 //!
 //!   fn get_cluster_info() -> Result<ClusterMap> {
 //!       let config = std::fs::read_to_string("cluster.json")?;
@@ -60,7 +60,7 @@
 //!   #     }
 //!   # }
 //!   #
-//!   use anyhow::{Context, Result};
+//!   use anyhow_serde::{Context, Result};
 //!
 //!   fn main() -> Result<()> {
 //!       # return Ok(());
@@ -96,7 +96,7 @@
 //!   mutable reference as needed.
 //!
 //!   ```
-//!   # use anyhow::anyhow;
+//!   # use anyhow_serde::anyhow;
 //!   # use std::fmt::{self, Display};
 //!   # use std::task::Poll;
 //!   #
@@ -164,10 +164,10 @@
 //!   ```
 //!
 //! - One-off error messages can be constructed using the `anyhow!` macro, which
-//!   supports string interpolation and produces an `anyhow::Error`.
+//!   supports string interpolation and produces an `anyhow_serde::Error`.
 //!
 //!   ```
-//!   # use anyhow::{anyhow, Result};
+//!   # use anyhow_serde::{anyhow, Result};
 //!   #
 //!   # fn demo() -> Result<()> {
 //!   #     let missing = "...";
@@ -179,7 +179,7 @@
 //!   A `bail!` macro is provided as a shorthand for the same early return.
 //!
 //!   ```
-//!   # use anyhow::{bail, Result};
+//!   # use anyhow_serde::{bail, Result};
 //!   #
 //!   # fn demo() -> Result<()> {
 //!   #     let missing = "...";
@@ -198,7 +198,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! anyhow = { version = "1.0", default-features = false }
+//! anyhow_serde = { version = "1.0", default-features = false }
 //! ```
 //!
 //! With versions of Rust older than 1.81, no_std mode may require an additional
@@ -206,7 +206,7 @@
 //! function that returns Anyhow's error type, as the trait that `?`-based error
 //! conversions are defined by is only available in std in those old versions.
 
-#![doc(html_root_url = "https://docs.rs/anyhow/1.0.100")]
+#![doc(html_root_url = "https://docs.rs/anyhow_serde/1.0.100")]
 #![cfg_attr(error_generic_member_access, feature(error_generic_member_access))]
 #![no_std]
 #![deny(dead_code, unused_imports, unused_mut)]
@@ -309,7 +309,7 @@ pub use anyhow as format_err;
 /// When you print an error object using "{}" or to_string(), only the outermost
 /// underlying error or context is printed, not any of the lower level causes.
 /// This is exactly as if you had called the Display impl of the error from
-/// which you constructed your anyhow::Error.
+/// which you constructed your anyhow_serde::Error.
 ///
 /// ```console
 /// Failed to read instrs from ./path/to/instrs.json
@@ -342,11 +342,11 @@ pub use anyhow as format_err;
 ///     No such file or directory (os error 2)
 ///
 /// Stack backtrace:
-///    0: <E as anyhow::context::ext::StdError>::ext_context
+///    0: <E as anyhow_serde::context::ext::StdError>::ext_context
 ///              at /git/anyhow/src/backtrace.rs:26
 ///    1: core::result::Result<T,E>::map_err
 ///              at /git/rustc/src/libcore/result.rs:596
-///    2: anyhow::context::<impl anyhow::Context<T,E> for core::result::Result<T,E>>::with_context
+///    2: anyhow_serde::context::<impl anyhow_serde::Context<T,E> for core::result::Result<T,E>>::with_context
 ///              at /git/anyhow/src/context.rs:58
 ///    3: testing::main
 ///              at src/main.rs:5
@@ -375,7 +375,7 @@ pub use anyhow as format_err;
 /// like this:
 ///
 /// ```
-/// use anyhow::{Context, Result};
+/// use anyhow_serde::{Context, Result};
 ///
 /// fn main() {
 ///     if let Err(err) = try_main() {
@@ -404,7 +404,7 @@ pub struct Error {
 /// # Example
 ///
 /// ```
-/// use anyhow::Error;
+/// use anyhow_serde::Error;
 /// use std::io;
 ///
 /// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
@@ -428,14 +428,14 @@ pub struct Chain<'a> {
 /// for `fn main`; if you do, failures will be printed along with any
 /// [context][Context] and a backtrace if one was captured.
 ///
-/// `anyhow::Result` may be used with one *or* two type parameters.
+/// `anyhow_serde::Result` may be used with one *or* two type parameters.
 ///
 /// ```rust
-/// use anyhow::Result;
+/// use anyhow_serde::Result;
 ///
 /// # const IGNORE: &str = stringify! {
 /// fn demo1() -> Result<T> {...}
-///            // ^ equivalent to std::result::Result<T, anyhow::Error>
+///            // ^ equivalent to std::result::Result<T, anyhow_serde::Error>
 ///
 /// fn demo2() -> Result<T, OtherError> {...}
 ///            // ^ equivalent to std::result::Result<T, OtherError>
@@ -461,7 +461,7 @@ pub struct Chain<'a> {
 /// #
 /// # impl Deserialize for ClusterMap {}
 /// #
-/// use anyhow::Result;
+/// use anyhow_serde::Result;
 ///
 /// fn main() -> Result<()> {
 ///     # return Ok(());
@@ -483,7 +483,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 /// # Example
 ///
 /// ```
-/// use anyhow::{Context, Result};
+/// use anyhow_serde::{Context, Result};
 /// use std::fs;
 /// use std::path::PathBuf;
 ///
@@ -531,7 +531,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 /// # Effect on downcasting
 ///
 /// After attaching context of type `C` onto an error of type `E`, the resulting
-/// `anyhow::Error` may be downcast to `C` **or** to `E`.
+/// `anyhow_serde::Error` may be downcast to `C` **or** to `E`.
 ///
 /// That is, in codebases that rely on downcasting, Anyhow's context supports
 /// both of the following use cases:
@@ -547,7 +547,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 ///     be helpful.
 ///
 ///     ```
-///     # use anyhow::bail;
+///     # use anyhow_serde::bail;
 ///     # use thiserror::Error;
 ///     #
 ///     # #[derive(Error, Debug)]
@@ -558,7 +558,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 ///     #     bail!(SuspiciousError);
 ///     # }
 ///     #
-///     use anyhow::{Context, Result};
+///     use anyhow_serde::{Context, Result};
 ///
 ///     fn do_it() -> Result<()> {
 ///         helper().context("Failed to complete the work")?;
@@ -587,7 +587,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 ///     the application.
 ///
 ///     ```
-///     # use anyhow::bail;
+///     # use anyhow_serde::bail;
 ///     # use thiserror::Error;
 ///     #
 ///     # #[derive(Error, Debug)]
@@ -598,7 +598,7 @@ pub type Result<T, E = Error> = core::result::Result<T, E>;
 ///     #     bail!("no such file or directory");
 ///     # }
 ///     #
-///     use anyhow::{Context, Result};
+///     use anyhow_serde::{Context, Result};
 ///
 ///     fn do_it() -> Result<()> {
 ///         helper().context(HelperFailed)?;
@@ -633,20 +633,20 @@ pub trait Context<T, E>: context::private::Sealed {
         F: FnOnce() -> C;
 }
 
-/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
+/// Equivalent to `Ok::<_, anyhow_serde::Error>(value)`.
 ///
-/// This simplifies creation of an `anyhow::Result` in places where type
+/// This simplifies creation of an `anyhow_serde::Result` in places where type
 /// inference cannot deduce the `E` type of the result &mdash; without needing
-/// to write`Ok::<_, anyhow::Error>(value)`.
+/// to write`Ok::<_, anyhow_serde::Error>(value)`.
 ///
-/// One might think that `anyhow::Result::Ok(value)` would work in such cases
+/// One might think that `anyhow_serde::Result::Ok(value)` would work in such cases
 /// but it does not.
 ///
 /// ```console
 /// error[E0282]: type annotations needed for `std::result::Result<i32, E>`
 ///   --> src/main.rs:11:13
 ///    |
-/// 11 |     let _ = anyhow::Result::Ok(1);
+/// 11 |     let _ = anyhow_serde::Result::Ok(1);
 ///    |         -   ^^^^^^^^^^^^^^^^^^ cannot infer type for type parameter `E` declared on the enum `Result`
 ///    |         |
 ///    |         consider giving this pattern the explicit type `std::result::Result<i32, E>`, where the type parameter `E` is specified

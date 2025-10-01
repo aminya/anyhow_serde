@@ -70,7 +70,7 @@ where
 /// ```
 /// # type T = ();
 /// #
-/// use anyhow::{Context, Result};
+/// use anyhow_serde::{Context, Result};
 ///
 /// fn maybe_get() -> Option<T> {
 ///     # const IGNORE: &str = stringify! {

@@ -5,7 +5,7 @@ mod drop;
 
 use self::common::*;
 use self::drop::{DetectDrop, Flag};
-use anyhow::Error;
+use anyhow_serde::Error;
 use std::error::Error as StdError;
 use std::fmt::{self, Display};
 use std::io;

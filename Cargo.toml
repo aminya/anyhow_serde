@@ -1,18 +1,18 @@
 [package]
-name = "anyhow"
+name = "anyhow_serde"
 version = "1.0.100"
-authors = ["David Tolnay <dtolnay@gmail.com>"]
+authors = ["David Tolnay <dtolnay@gmail.com>", "Amin Ya <aminyahyaabadi74@gmail.com>"]
 categories = ["rust-patterns", "no-std"]
-description = "Flexible concrete Error type built on std::error::Error"
-documentation = "https://docs.rs/anyhow"
+description = "Flexible concrete Error type built on std::error::Error with serde support"
+documentation = "https://docs.rs/anyhow_serde"
 edition = "2018"
 keywords = ["error", "error-handling"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/dtolnay/anyhow"
+repository = "https://github.com/aminya/anyhow_serde"
 rust-version = "1.39"
 
 [features]
-default = ["std"]
+default = ["std", "serde"]
 std = []
 serialize = ["serde"]
 

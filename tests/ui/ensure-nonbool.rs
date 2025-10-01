@@ -1,4 +1,4 @@
-use anyhow::{ensure, Result};
+use anyhow_serde::{ensure, Result};
 use std::ops::{Deref, Not};
 
 struct Bool(bool);

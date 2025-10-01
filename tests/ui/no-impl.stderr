@@ -2,18 +2,18 @@ error[E0599]: the method `anyhow_kind` exists for reference `&Error`, but its tr
  --> tests/ui/no-impl.rs:7:13
   |
 4 | struct Error;
-  | ------------ doesn't satisfy `Error: Into<anyhow::Error>`, `Error: anyhow::kind::TraitKind` or `Error: std::fmt::Display`
+  | ------------ doesn't satisfy `Error: Into<anyhow_serde::Error>`, `Error: anyhow_serde::kind::TraitKind` or `Error: std::fmt::Display`
 ...
 7 |     let _ = anyhow!(Error);
   |             ^^^^^^^^^^^^^^ method cannot be called on `&Error` due to unsatisfied trait bounds
   |
   = note: the following trait bounds were not satisfied:
-          `Error: Into<anyhow::Error>`
-          which is required by `Error: anyhow::kind::TraitKind`
+          `Error: Into<anyhow_serde::Error>`
+          which is required by `Error: anyhow_serde::kind::TraitKind`
           `Error: std::fmt::Display`
-          which is required by `&Error: anyhow::kind::AdhocKind`
-          `&Error: Into<anyhow::Error>`
-          which is required by `&Error: anyhow::kind::TraitKind`
+          which is required by `&Error: anyhow_serde::kind::AdhocKind`
+          `&Error: Into<anyhow_serde::Error>`
+          which is required by `&Error: anyhow_serde::kind::TraitKind`
 note: the traits `Into` and `std::fmt::Display` must be implemented
  --> $RUST/core/src/fmt/mod.rs
   |
@@ -26,7 +26,7 @@ note: the traits `Into` and `std::fmt::Display` must be implemented
   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   = help: items from traits can only be used if the trait is implemented and in scope
   = note: the following traits define an item `anyhow_kind`, perhaps you need to implement one of them:
-          candidate #1: `anyhow::kind::AdhocKind`
-          candidate #2: `anyhow::kind::BoxedKind`
-          candidate #3: `anyhow::kind::TraitKind`
+          candidate #1: `anyhow_serde::kind::AdhocKind`
+          candidate #2: `anyhow_serde::kind::BoxedKind`
+          candidate #3: `anyhow_serde::kind::TraitKind`
   = note: this error originates in the macro `anyhow` (in Nightly builds, run with -Z macro-backtrace for more info)

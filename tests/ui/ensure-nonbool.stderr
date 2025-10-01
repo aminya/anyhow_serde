@@ -10,7 +10,7 @@ error[E0277]: the trait bound `&str: __private::not::Bool` is not satisfied
    = help: the following other types implement trait `__private::not::Bool`:
              &bool
              bool
-note: required by a bound in `anyhow::__private::not`
+note: required by a bound in `anyhow_serde::__private::not`
   --> src/lib.rs
    |
    |     pub fn not(cond: impl Bool) -> bool {
@@ -26,7 +26,7 @@ error[E0277]: the trait bound `&mut bool: __private::not::Bool` is not satisfied
    |                       required by a bound introduced by this call
    |
    = note: `__private::not::Bool` is implemented for `&bool`, but not for `&mut bool`
-note: required by a bound in `anyhow::__private::not`
+note: required by a bound in `anyhow_serde::__private::not`
   --> src/lib.rs
    |
    |     pub fn not(cond: impl Bool) -> bool {
@@ -50,7 +50,7 @@ help: the trait `__private::not::Bool` is not implemented for `DerefBool`
    |
  6 | struct DerefBool(bool);
    | ^^^^^^^^^^^^^^^^
-note: required by a bound in `anyhow::__private::not`
+note: required by a bound in `anyhow_serde::__private::not`
   --> src/lib.rs
    |
    |     pub fn not(cond: impl Bool) -> bool {
@@ -69,7 +69,7 @@ error[E0277]: the trait bound `&DerefBool: __private::not::Bool` is not satisfie
    |     |       the trait `__private::not::Bool` is not implemented for `&DerefBool`
    |     required by a bound introduced by this call
    |
-note: required by a bound in `anyhow::__private::not`
+note: required by a bound in `anyhow_serde::__private::not`
   --> src/lib.rs
    |
    |     pub fn not(cond: impl Bool) -> bool {
@@ -96,7 +96,7 @@ help: the trait `__private::not::Bool` is not implemented for `NotBool`
    = help: the following other types implement trait `__private::not::Bool`:
              &bool
              bool
-note: required by a bound in `anyhow::__private::not`
+note: required by a bound in `anyhow_serde::__private::not`
   --> src/lib.rs
    |
    |     pub fn not(cond: impl Bool) -> bool {

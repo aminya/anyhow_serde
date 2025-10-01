@@ -1,8 +1,8 @@
 #![deny(unused_must_use)]
 
-use anyhow::anyhow;
+use anyhow_serde::anyhow;
 
-fn main() -> anyhow::Result<()> {
+fn main() -> anyhow_serde::Result<()> {
     if true {
         // meant to write bail!
         anyhow!("it failed");

@@ -1,6 +1,6 @@
 // Tagged dispatch mechanism for resolving the behavior of `anyhow!($expr)`.
 //
-// When anyhow! is given a single expr argument to turn into anyhow::Error, we
+// When anyhow! is given a single expr argument to turn into anyhow_serde::Error, we
 // want the resulting Error to pick up the input's implementation of source()
 // and backtrace() if it has a std::error::Error impl, otherwise require nothing
 // more than Display and Debug.
