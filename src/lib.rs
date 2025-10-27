@@ -637,7 +637,7 @@ pub trait Context<T, E>: context::private::Sealed {
 ///
 /// This simplifies creation of an `anyhow_serde::Result` in places where type
 /// inference cannot deduce the `E` type of the result &mdash; without needing
-/// to write`Ok::<_, anyhow_serde::Error>(value)`.
+/// to write `Ok::<_, anyhow_serde::Error>(value)`.
 ///
 /// One might think that `anyhow_serde::Result::Ok(value)` would work in such cases
 /// but it does not.
